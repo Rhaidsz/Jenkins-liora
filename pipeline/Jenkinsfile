@@ -4,27 +4,43 @@ pipeline {
 
     environment {
         SCHOOL = "liora"
+        NAME = "Anthony"
     }
 
     stages {
         stage("Env Variables") {
             environment {
-                NAME = "Liora"
+                NAME = "lewis" // replaces the NAME variable defined at the pipeline level
+                BUILD_ID = "2" // replaces the default BUILD_ID variable
             }
 
             steps {
-                echo "SCHOOL = ${env.SCHOOL}"
-                echo "NAME = ${env.NAME}"
-
+                echo "SCHOOL = ${env.SCHOOL}" // displays "SCHOOL = liora"
+                echo "NAME = ${env.NAME}"     // displays "NAME = lewis"
+                echo "BUILD_ID = ${env.BUILD_ID}" // displays "BUILD_ID = 2"
 
                 script {
-                    env.TEST_VARIABLE = "some test value"
+                    env.SOMETHING = "1" // creates the variable env.SOMETHING
+                }
+            }
+
+
+        stage("Override Variables") {
+            steps {
+                script {
+                    env.SCHOOL = "I LOVE LIORA!" // cannot replace SCHOOL defined at the pipeline or stage level
+                    env.SOMETHING = "2" // can replace a variable created imperatively
                 }
 
-                echo "TEST_VARIABLE = ${env.TEST_VARIABLE}"
+                echo "SCHOOL = ${env.SCHOOL}"     // displays "SCHOOL = liora"
+                echo "SOMETHING = ${env.SOMETHING}" // displays "SOMETHING = 2"
 
-                withEnv(["ANOTHER_ENV_VAR=here is some value"]) {
-                    echo "irgendein bullshit = ${env.ANOTHER_ENV_VAR}"
+                withEnv(["SCHOOL=DEV UNIVERSITY"]) { // can replace any variable
+                    echo "SCHOOL = ${env.SCHOOL}" // displays "SCHOOL = DEV UNIVERSITY"
+                }
+
+                withEnv(["BUILD_ID=1"]) {
+                    echo "BUILD_ID = ${env.BUILD_ID}" // displays "BUILD_ID = 1"
                 }
             }
         }
