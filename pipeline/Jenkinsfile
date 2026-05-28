@@ -23,7 +23,7 @@ pipeline {
                     env.SOMETHING = "1" // creates the variable env.SOMETHING
                 }
             }
-
+        }
 
         stage("Override Variables") {
             steps {
@@ -45,5 +45,4 @@ pipeline {
             }
         }
     }
-}
 }
