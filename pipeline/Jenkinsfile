@@ -24,7 +24,7 @@ pipeline {
                 echo "TEST_VARIABLE = ${env.TEST_VARIABLE}"
 
                 withEnv(["ANOTHER_ENV_VAR=here is some value"]) {
-                    echo "ANOTHER_ENV_VAR = ${env.ANOTHER_ENV_VAR}"
+                    echo "irgendein bullshit = ${env.ANOTHER_ENV_VAR}"
                 }
             }
         }
